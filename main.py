@@ -20,8 +20,7 @@ def add_to_points(coordinates): #добавление точки в рассма
 
 def the_same_point_message(): #ошибка повтора точки
     global res
-    res = f"{res}Уже есть такая точка\n"
-    lbl_1.configure(text=res) 
+    lbl_1.configure(text=f"{res}Уже есть такая точка\n") 
 
 def draw_point(x, y): #отрисовка точки по координатам
     c.create_oval(x,y,x,y,fill="white", width=10)
@@ -58,7 +57,7 @@ def delete_not_all(): #очищение холста
     c.delete('all')
     draw_coordinate_system()
 
-def draw_point_with_coordinates(event): #отрисовка точки по введенным координатам
+def draw_point_with_click(event): #отрисовка точки по клику на холсте
     x=event.x
     y=event.y
     coordinates = [(x - w/2) / 20, (-y + w/ 2) / 20]
@@ -69,22 +68,31 @@ def draw_point_with_coordinates(event): #отрисовка точки по вв
     else:
         the_same_point_message()
 
-def draw_point_by_click(): #отрисовка точки по клику на холсте
+def draw_point_with_coordinates(): #отрисовка точки по введенным координатам
     global res
-    coordinates = list(map(float, txt.get().split()))
-    if f'({coordinates[0]}, {coordinates[1]})' not in res:
-        draw_point(canva_coordinates(coordinates[0]), canva_coordinates(-coordinates[1]))
-        add_to_points(coordinates)
-        see_coordinate(coordinates)
+    for i in txt.get().split(): #проверка введенных данных
+        try:
+            float(i)
+        except ValueError:
+            lbl_1.configure(text=f'{res}Ошибка ввода') 
     else:
-        the_same_point_message()
+        coordinates = list(map(float, txt.get().split()))
+        if len(coordinates) == 2:
+            if f'({coordinates[0]}, {coordinates[1]})' not in res:
+                draw_point(canva_coordinates(coordinates[0]), canva_coordinates(-coordinates[1]))
+                add_to_points(coordinates)
+                see_coordinate(coordinates)
+            else:
+                the_same_point_message()
+        else:
+            lbl_1.configure(text=f'{res}Ошибка ввода') 
   
 window = Tk() #создаем окно программы
 window.title("Выпуклая оболочка")  
 window.geometry(f'{w + 305}x{h + 305}+400+0') #задаем размер окна
 c = Canvas(window, width = w, height = h, bg = 'black') #создаем холст
 c.grid(column= 1, row=5)
-c.bind('<Button-1>', draw_point_with_coordinates)
+c.bind('<Button-1>', draw_point_with_click)
 
 lbl = Label(window, text="Введите координаты точки через пробел")  
 lbl.grid(column=0, row=0)  
@@ -95,7 +103,7 @@ txt = Entry(window,width=10) #строка ввода
 txt.grid(column=0, row=1)  
 txt.focus()
 
-btn = Button(window, text="Добавить точку", command=draw_point_by_click)  
+btn = Button(window, text="Добавить точку", command=draw_point_with_coordinates)  
 btn.grid(column=0, row=2)  
 btn_1 = Button(window, text="Построить оболочку", command=convex)  
 btn_1.grid(column=0, row=3)  
