@@ -15,10 +15,10 @@ Using the Graham algorithm, the vertices of a convex polygon will be found. To d
 After that, the sides of the resulting polygon are drawn on the canvas. The convex hull is constructed.
 Now you can add new points to the existing ones or clear the canvas using the "clear canvas" button.
 
-▪️main.py file run the program
-▪️do_convex.py file algorithm Graham
-▪️classes.py file with classes, ispolzuemye in the program code
-▪️values.py file to store some values of the variables
+▪️main.py – file run the program
+▪️do_convex.py – file Graham's algorithm 
+▪️classes.py – file with classes, ispolzuemye in the program code
+▪️values.py – file to store some values of the variables
 
 ❗️To run the program, you will need the Tkinter library.
 
