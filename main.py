@@ -50,7 +50,7 @@ def delete_all(): #полное очищение всех данных в про
     draw_coordinate_system()
     points = []
     res = ''
-    lbl_1.configure(text='Здесь будут точки') 
+    lbl_1.configure(text='Здесь будут координаты точек') 
 
 def delete_not_all(): #очищение холста
     global points, res
@@ -96,7 +96,7 @@ c.bind('<Button-1>', draw_point_with_click)
 
 lbl = Label(window, text="Введите координаты точки через пробел")  
 lbl.grid(column=0, row=0)  
-lbl_1 = Label(window, text="Здесь будут точки")  
+lbl_1 = Label(window, text="Здесь будут координаты точек")  
 lbl_1.grid(column=0, row=5) 
 
 txt = Entry(window,width=10) #строка ввода
